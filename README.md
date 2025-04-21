@@ -12,12 +12,13 @@ Kullanılan Teknolojiler:
 -HTML
 
 Kurulum:
-```bash
+```
 git clone https://github.com/BeyzaCelik0/aiKodUretici.git
 cd aiKodUretici
 pip install -r requirements.txt
 ollama run llama3
 python app.py
+```
 
 Kullanım:
 -Uygulamayı başlatmak için `python app.py` komutunu çalıştırın.

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Yapay Zekâ Destekli Kod Üretici</title>
+</head>
+<body>
+    <h1>Yapay Zekâ Destekli Kod Üretici</h1>
+    <form method="POST">
+        <label>İsteğinizi girin:</label><br>
+        <textarea name="prompt" rows="6" cols="60"></textarea><br>
+        <button type="submit">Kodu Üret</button>
+    </form>
+
+    {% if title %}
+        <h2>Başlık: {{ title }}</h2>
+        <pre><code>{{ code }}</code></pre>
+    {% endif %}
+
+    {% if response %}
+        <h2>Üretilen Kod:</h2>
+        <pre><code>{{ response }}</code></pre>
+    {% endif %}
+</body>
+</html>
