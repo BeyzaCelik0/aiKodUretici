@@ -1,0 +1,16 @@
+image:
+  repository: beyzanurcelik/ai-kod-uretici
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+service:
+  type: NodePort
+  port: 80
+  targetPort: 5000
+  nodePort: 30007
+
+serviceAccount:
+  create: true
+  automount: true
+  annotations: {}
+  name: ""

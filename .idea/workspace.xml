@@ -5,8 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d3ca9d6c-b19f-461c-9f9f-312f7b670cf8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/arayuz.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.dockerignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-kod-uretici-chart/.helmignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-kod-uretici-chart/Chart.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-kod-uretici-chart/templates/_helpers.tpl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-kod-uretici-chart/templates/deployment.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-kod-uretici-chart/templates/service.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-kod-uretici-chart/templates/serviceaccount.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-kod-uretici-chart/templates/tests/test-connection.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ai-kod-uretici-chart/values.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ollama-deployment.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ollama-service.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />

@@ -24,32 +24,35 @@ Kod:
 ---"""
         full_prompt = f"{system_prompt}\nİstek: {prompt}"
 
-        response = requests.post("http://localhost:11434/api/chat", json={
-            "model": "llama3",
-            "messages": [{"role": "user", "content": full_prompt}],
-            "stream": False
-        })
-
-        result = ""
-        for line in response.iter_lines():
-            if line:
-                json_line = line.decode("utf-8")
-                try:
-                    content_piece = eval(json_line).get("message", {}).get("content", "")
-                    result += content_piece
-                except:
-                    continue
-        result = response.json()["message"]["content"]
-        print("Yapay zekadan gelen sonuç:\n", result)
-
         try:
-            title = result.split("Başlık:")[1].split("Kod:")[0].strip()
-            code = result.split("Kod:")[1].strip()
-        except:
-            code = result.strip()
+            response = requests.post("http://ollama-service:11434/api/chat", json={
+                "model": "llama3",
+                "messages": [{"role": "user", "content": full_prompt}],
+                "stream": False
+            })
+
+            json_response = response.json()
+            print("Gelen JSON:", json_response)  # <<< BURADA BASTIRIYORUZ
+
+            # HATA KONTROLÜ
+            if "message" in json_response:
+                result = json_response["message"]["content"]
+                print("Yapay zekadan gelen sonuç:\n", result)
+
+                try:
+                    title = result.split("Başlık:")[1].split("Kod:")[0].strip()
+                    code = result.split("Kod:")[1].strip()
+                except Exception as e:
+                    print(f"Başlık veya Kod ayrıştırılamadı: {e}")
+                    code = result.strip()
+            elif "error" in json_response:
+                code = f"Hata: {json_response['error']}"
+            else:
+                code = f"Hata: Beklenmeyen cevap: {json_response}"
+        except Exception as e:
+            code = f"Sunucu hatası: {str(e)}"
 
     return render_template("index.html", title=title, code=code)
 
 if __name__ == "__main__":
     app.run(debug=True)
-
