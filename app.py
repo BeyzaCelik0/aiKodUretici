@@ -25,9 +25,9 @@ Kod:
         full_prompt = f"{system_prompt}\nİstek: {prompt}"
 
         try:
-            response = requests.post("http://ollama-service:11434/api/chat", json={
+            response = requests.post("http://localhost:11434/api/generate", json={
                 "model": "llama3",
-                "messages": [{"role": "user", "content": full_prompt}],
+                "prompt": full_prompt,
                 "stream": False
             })
 

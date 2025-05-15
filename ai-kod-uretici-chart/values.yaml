@@ -1,6 +1,6 @@
 image:
   repository: beyzanurcelik/aikoduretici
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   tag: "latest"
 
 service:
@@ -14,3 +14,11 @@ serviceAccount:
   automount: true
   annotations: {}
   name: ""
+
+ollama:
+  tag: "0.6.8"
+  resources:
+      requests:
+        memory: "6Gi"
+      limits:
+        memory: "8Gi"

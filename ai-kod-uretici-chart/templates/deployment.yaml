@@ -3,6 +3,9 @@ kind: Deployment
 metadata:
   name: {{ .Chart.Name }}
 spec:
+  tolerations:
+  - key: "node-role.kubernetes.io/control-plane"
+    effect: "NoSchedule"
   replicas: 1
   selector:
     matchLabels:
@@ -12,8 +15,33 @@ spec:
       labels:
         app: {{ .Chart.Name }}
     spec:
+      # Shared volume for persistent model storage
+      volumes:
+        - name: ollama-models
+          persistentVolumeClaim:
+            claimName: ollama-models-pvc
+
       containers:
-        - name: {{ .Chart.Name }}
+        # Flask application container
+        - name: flask-app
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           ports:
             - containerPort: {{ .Values.service.targetPort }}
+          env:
+            - name: OLLAMA_HOST
+              value: "http://localhost:11434"
+          volumeMounts:
+            - name: ollama-models
+              mountPath: /root/.ollama/models
+
+        # Ollama side-car container serving the llama3 model directly
+        - name: ollama
+          image: ollama/ollama:{{ .Values.ollama.tag }}
+          command: ["ollama", "serve"]  # Sadece bu kadar!
+          ports:
+            - containerPort: 11434
+          volumeMounts:
+            - name: ollama-models
+              mountPath: /root/.ollama/models
+          resources:
+            {{- toYaml .Values.ollama.resources | nindent 12 }}
