@@ -25,32 +25,40 @@ Kod:
         full_prompt = f"{system_prompt}\nİstek: {prompt}"
 
         try:
-            response = requests.post("http://localhost:11434/api/generate", json={
-                "model": "llama3",
-                "prompt": full_prompt,
-                "stream": False
-            })
+            response = requests.post(
+                "http://localhost:11434/api/generate",
+                json={
+                    "model": "llama3",
+                    "prompt": full_prompt,
+                    "stream": False
+                },
+                timeout=60
+            )
 
             json_response = response.json()
-            print("Gelen JSON:", json_response)  # <<< BURADA BASTIRIYORUZ
+            print("Gelen JSON:", json_response)
 
-            # HATA KONTROLÜ
-            if "message" in json_response:
+            if "response" in json_response:
+                result = json_response["response"]
+            elif "message" in json_response:
                 result = json_response["message"]["content"]
-                print("Yapay zekadan gelen sonuç:\n", result)
-
-                try:
-                    title = result.split("Başlık:")[1].split("Kod:")[0].strip()
-                    code = result.split("Kod:")[1].strip()
-                except Exception as e:
-                    print(f"Başlık veya Kod ayrıştırılamadı: {e}")
-                    code = result.strip()
             elif "error" in json_response:
-                code = f"Hata: {json_response['error']}"
+                result = f"Hata: {json_response['error']}"
             else:
-                code = f"Hata: Beklenmeyen cevap: {json_response}"
+                result = f"Beklenmeyen cevap: {json_response}"
+            print("Yapay zekadan gelen sonuç:\n", result)
+
+            try:
+                title = result.split("Başlık:")[1].split("Kod:")[0].strip()
+                code = result.split("Kod:")[1].strip()
+            except Exception as e:
+                print(f"Başlık veya Kod ayrıştırılamadı: {e}")
+                title = ""
+                code = result
+
         except Exception as e:
-            code = f"Sunucu hatası: {str(e)}"
+            title = ""
+            code = f"Sunucu hatası: {e}"
 
     return render_template("index.html", title=title, code=code)
 
