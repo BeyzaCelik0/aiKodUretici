@@ -18,7 +18,10 @@ serviceAccount:
 ollama:
   tag: "0.6.8"
   resources:
-      requests:
-        memory: "6Gi"
-      limits:
-        memory: "8Gi"
+    requests:
+      memory: "6Gi"
+    limits:
+      memory: "8Gi"
+  env:
+    - name: OLLAMA_MODELS
+      value: /models
